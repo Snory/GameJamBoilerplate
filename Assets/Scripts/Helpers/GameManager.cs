@@ -16,10 +16,10 @@ public class GameManager : Singleton<GameManager>
     public GameState GameState { get => _currentGameState; }
 
     [SerializeField]
-    private GlobalEvent _pauseGameGlobalEvent;
+    private GeneralEvent _pauseGameGlobalEvent;
     
     [SerializeField]
-    private GlobalEvent _restartGameGlobalEvent;
+    private GeneralEvent _restartGameGlobalEvent;
 
     public void TransitToState(GameState newGameState)
     {
@@ -53,7 +53,6 @@ public class GameManager : Singleton<GameManager>
         {
             RestartGame();
         }
-
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {

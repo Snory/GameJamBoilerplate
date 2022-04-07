@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(GlobalEvent))]
-public class GlobalEventRaiseEditor : Editor
+[CustomEditor(typeof(GeneralEvent))]
+public class GeneralEventRaiseEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        GlobalEvent globalEvent = (GlobalEvent) target;
+        GeneralEvent globalEvent = (GeneralEvent) target;
         if (GUILayout.Button("Raise"))
         {
             globalEvent.Raise();

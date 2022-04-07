@@ -11,7 +11,7 @@ public abstract class SceneTransitionBase : MonoBehaviour
 {
     
     [SerializeField]
-    private GlobalEvent _sceneLoaded;
+    private GeneralEvent _sceneLoaded;
 
     public void UnloadScene(string currentSceneName)
     {

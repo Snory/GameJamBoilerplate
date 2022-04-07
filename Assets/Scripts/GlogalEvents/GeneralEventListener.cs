@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GlogalEventListener : MonoBehaviour
+public class GeneralEventListener : MonoBehaviour
 {
-    public GlobalEvent Event;
+    public GeneralEvent Event;
     public UnityEvent Response;
 
     private void OnEnable()
