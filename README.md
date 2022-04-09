@@ -25,4 +25,5 @@
 - AI skeleton
   - StateMachine
   - GOAP
+- Leaderboard with own microservice
  
