@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Tester : MonoBehaviour
+public class RaiseStateTransition : MonoBehaviour
 {
     public UnityEvent<ExampleStateEventArgument> TestEvent;
 
