@@ -1,4 +1,4 @@
-# LudumDare2D basic template
+# LudumDare basic template
 
 ## Contains
 
