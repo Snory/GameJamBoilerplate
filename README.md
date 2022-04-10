@@ -15,7 +15,8 @@
   - help to pause coroutine while waiting for some state to happen (like paused game)
   - waits while true, run while false 
   - https://docs.unity3d.com/ScriptReference/CustomYieldInstruction.html
-
+- AI solutions
+  - Finite state machine (https://github.com/Snory/LudumDareTemplate/wiki/Finite-state-machine)
 
 ## Planned
 
@@ -23,7 +24,6 @@
   - probably with some solution for steering behavior 
 - Dialogue system 
 - AI skeleton
-  - StateMachine
   - GOAP
 - Leaderboard with own microservice
  
