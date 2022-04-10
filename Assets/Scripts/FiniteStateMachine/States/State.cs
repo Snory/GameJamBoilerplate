@@ -7,7 +7,7 @@ using System;
 public abstract class State : ScriptableObject
 {
     //possible transition for the state
-    public List<Transition> Transitions;
+    public List<StateTransition> Transitions;
     public List<StateAction> StateActions;
 
     public abstract void OnExit(StateEventArguments stateEventArguments);
