@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneSwitch : MonoBehaviour
 {
-    public string CurrentScene;
     public string NextScene;
     public BoolVariable Additive;
 
@@ -13,6 +13,6 @@ public class SceneSwitch : MonoBehaviour
 
     public void SwitchScene()
     {
-        _sceneTransition.TransitToScene(CurrentScene, NextScene, Additive.Value);
+        _sceneTransition.TransitToScene(SceneManager.GetActiveScene().name, NextScene, Additive.Value);
     }
 }
