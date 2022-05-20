@@ -15,11 +15,14 @@ public class GameManager : Singleton<GameManager>
 
     public GameState GameState { get => _currentGameState; }
 
-    [SerializeField]
-    private GeneralEvent _pauseGameGlobalEvent;
-    
-    [SerializeField]
-    private GeneralEvent _restartGameGlobalEvent;
+
+    [SerializeField] private GeneralEvent _pauseGameGlobalEvent;
+
+
+    [SerializeField] private GeneralEvent _restartGameGlobalEvent;
+
+    private List<HighScoreData> _highScores;
+    private PlayerPrefsGenericRepository<HighScoreData> _highScoreRepository;
 
     public void TransitToState(GameState newGameState)
     {
@@ -36,9 +39,16 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public void AddHighScore(HighScoreData newHighScoreData)
+    {
+        _highScores.Add(newHighScoreData);
+    }
+
     private void Start()
     {
         SceneManager.LoadScene(_startScene, LoadSceneMode.Additive);
+        _highScoreRepository = new PlayerPrefsGenericRepository<HighScoreData>();
+        _highScores = (List<HighScoreData>) _highScoreRepository.Load();        
     }
 
     private void Update()
@@ -88,6 +98,7 @@ public class GameManager : Singleton<GameManager>
 
     private void QuitGame()
     {
+        _highScoreRepository.Save(_highScores);
         Application.Quit();
     }
 
