@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
-
+using System.Linq;
 public enum GameState { GAMEPLAY, PAUSED, MAINMENU, OVER }
 
 public class GameManager : Singleton<GameManager>
@@ -21,9 +21,6 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField] private GeneralEvent _restartGameGlobalEvent;
 
-    private List<HighScoreData> _highScores;
-    private PlayerPrefsGenericRepository<HighScoreData> _highScoreRepository;
-
     public void TransitToState(GameState newGameState)
     {
         _currentGameState = newGameState;
@@ -39,16 +36,10 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public void AddHighScore(HighScoreData newHighScoreData)
-    {
-        _highScores.Add(newHighScoreData);
-    }
-
     private void Start()
     {
         SceneManager.LoadScene(_startScene, LoadSceneMode.Additive);
-        _highScoreRepository = new PlayerPrefsGenericRepository<HighScoreData>();
-        _highScores = (List<HighScoreData>) _highScoreRepository.Load();        
+
     }
 
     private void Update()
@@ -98,8 +89,12 @@ public class GameManager : Singleton<GameManager>
 
     private void QuitGame()
     {
-        _highScoreRepository.Save(_highScores);
-        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+Application.Quit();
+#endif
     }
 
 }

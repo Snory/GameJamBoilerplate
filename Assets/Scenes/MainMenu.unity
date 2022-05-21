@@ -630,6 +630,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5820918029204678596, guid: d374029fedf739c46a15a782d4f68879, type: 3}
+      propertyPath: NextScene
+      value: HighScoreExample
+      objectReference: {fileID: 0}
+    - target: {fileID: 5820918029204678596, guid: d374029fedf739c46a15a782d4f68879, type: 3}
       propertyPath: _sceneTransition
       value: 
       objectReference: {fileID: 978859846}

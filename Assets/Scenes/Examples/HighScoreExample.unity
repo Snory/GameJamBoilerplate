@@ -320,9 +320,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9969591a5e5982a49989cd09e6279c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentScene: Level
+  CurrentScene: 
   NextScene: Level
   Additive: {fileID: 11400000, guid: 5a9c7f7c62a8c334ea61d6191557b7ec, type: 2}
+  _eventSystemInScene: {fileID: 0}
+  _audioListenerInScene: {fileID: 0}
   _sceneTransition: {fileID: 1096228346}
 --- !u!1001 &1096228345
 PrefabInstance:

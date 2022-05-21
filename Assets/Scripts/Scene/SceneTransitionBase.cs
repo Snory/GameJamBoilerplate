@@ -9,13 +9,13 @@ using UnityEngine.SceneManagement;
 
 public abstract class SceneTransitionBase : MonoBehaviour
 {
-    
+
     [SerializeField]
     private GeneralEvent _sceneLoaded;
 
     public void UnloadScene(string currentSceneName)
     {
-        if(SceneManager.sceneCount == 1)
+        if (SceneManager.sceneCount == 1)
         {
             return;
         }
@@ -26,8 +26,8 @@ public abstract class SceneTransitionBase : MonoBehaviour
     {
         StartCoroutine(LoadSceneRoutine(newSceneName, additive));
     }
-        
-    private IEnumerator LoadSceneRoutine(string newSceneName,bool additive)
+
+    private IEnumerator LoadSceneRoutine(string newSceneName, bool additive)
     {
         LoadSceneMode mode = additive == true ? LoadSceneMode.Additive : LoadSceneMode.Single;
 
