@@ -23,16 +23,15 @@ public abstract class SceneTransitionBase : MonoBehaviour
         StartCoroutine(UnloadSceneRoutine(currentSceneName));
     }
 
-    public void LoadScene(string newSceneName, bool additive)
+    public void LoadScene(string newSceneName)
     {
-        StartCoroutine(LoadSceneRoutine(newSceneName, additive));
+        StartCoroutine(LoadSceneRoutine(newSceneName));
     }
 
-    private IEnumerator LoadSceneRoutine(string newSceneName, bool additive)
+    private IEnumerator LoadSceneRoutine(string newSceneName)
     {
-        LoadSceneMode mode = additive == true ? LoadSceneMode.Additive : LoadSceneMode.Single;
 
-        AsyncOperation asyncOp = SceneManager.LoadSceneAsync(newSceneName, mode);
+        AsyncOperation asyncOp = SceneManager.LoadSceneAsync(newSceneName);
         asyncOp.allowSceneActivation = false;
 
         while (!asyncOp.isDone)
@@ -56,10 +55,10 @@ public abstract class SceneTransitionBase : MonoBehaviour
         }
     }
 
-    public virtual void TransitToScene(string currentSceneName, string newSceneName, bool additive)
+    public virtual void TransitToScene(string currentSceneName, string newSceneName)
     {
         UnloadScene(currentSceneName);
-        LoadScene(newSceneName, additive);
+        LoadScene(newSceneName);
     }
 
     public void SceneLoaded()

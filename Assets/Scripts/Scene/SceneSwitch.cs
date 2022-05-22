@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 public class SceneSwitch : MonoBehaviour
 {
     public string CurrentScene;
-    public BoolVariable Additive;
-
 
     [SerializeField]
     private EventSystem _eventSystemInScene;
@@ -22,7 +20,6 @@ public class SceneSwitch : MonoBehaviour
     
     public void SwitchScene(string NextSceneName)
     {
-        Debug.Log("Switch scene");
         if (_eventSystemInScene != null)
         {
             _eventSystemInScene.enabled = false;
@@ -33,7 +30,7 @@ public class SceneSwitch : MonoBehaviour
             _audioListenerInScene.enabled = false;
         }
 
-        _sceneTransition.TransitToScene(CurrentScene, NextSceneName, Additive.Value);
+        _sceneTransition.TransitToScene(CurrentScene, NextSceneName);
     }
 
 }

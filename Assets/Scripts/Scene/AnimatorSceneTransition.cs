@@ -18,22 +18,17 @@ public class AnimatorSceneTransition : SceneTransitionBase
     [SerializeField]
     private float _initLoadDelay = 1.5f;
 
-    public override void TransitToScene(string currentSceneName, string newSceneName, bool additive)
+    public override void TransitToScene(string currentSceneName, string newSceneName)
     {
-        StartCoroutine(RunAnimator(currentSceneName, newSceneName, additive));
+        StartCoroutine(RunAnimator(currentSceneName, newSceneName));
     }
 
-    public IEnumerator RunAnimator(string currentSceneName, string newSceneName, bool additive)
+    public IEnumerator RunAnimator(string currentSceneName, string newSceneName)
     {
         yield return new WaitForSeconds(_initTransitionDelay);
         _sceneTransitionAnimator.SetTrigger("End");
         yield return new WaitForSeconds(_initLoadDelay);
-        LoadScene(newSceneName, additive);
-        if (additive)
-        {
-            UnloadScene(currentSceneName);
-        }
-
+        LoadScene(newSceneName);
     }
 }
 
