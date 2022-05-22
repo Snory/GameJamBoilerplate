@@ -11,12 +11,11 @@
 - Type writter
   - it will take text and make it appear letter by letter
   - start of the future dialogue system
-- CustomYieldInstruction taking Func<Bool>
-  - help to pause coroutine while waiting for some state to happen (like paused game)
-  - waits while true, run while false 
-  - https://docs.unity3d.com/ScriptReference/CustomYieldInstruction.html
 - AI solutions
   - Finite state machine (https://github.com/Snory/LudumDareTemplate/wiki/Finite-state-machine)
+- Leadeboard
+  - Leadeboard solution for https://lootlocker.com/
+  
 
 ## Planned
 
