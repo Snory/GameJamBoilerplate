@@ -21,6 +21,11 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField] private GeneralEvent _restartGameGlobalEvent;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     public void TransitToState(GameState newGameState)
     {
         _currentGameState = newGameState;
@@ -38,7 +43,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        SceneManager.LoadScene(_startScene, LoadSceneMode.Additive);
+        SceneManager.LoadScene(_startScene, LoadSceneMode.Single);
 
     }
 
