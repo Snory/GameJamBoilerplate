@@ -7,17 +7,12 @@ public class LootLockerLeaderboardRepository : IRepository<HighScoreData>
 {
     int _leaderBoardId = 3195;
 
-
     public HighScoreData Add(HighScoreData item)
     {
 
         LootLockerSDKManager.SubmitScore(item.PlayerId, item.Score, _leaderBoardId, (response) =>
            {
-               if (response.success)
-               {
-                   Debug.Log("Score updated");
-               }
-               else
+               if (!response.success)
                {
                    Debug.LogError("Score could not be updated: " + response.Error);
                }
@@ -30,7 +25,6 @@ public class LootLockerLeaderboardRepository : IRepository<HighScoreData>
     {
         if (!PlayerPrefs.HasKey("PlayerName"))
         {
-            Debug.Log("Missing name");
             return;
         }
 
@@ -42,11 +36,7 @@ public class LootLockerLeaderboardRepository : IRepository<HighScoreData>
                 {
                     LootLockerSDKManager.SetPlayerName(PlayerPrefs.GetString("PlayerName"), (response) =>
                     {
-                        if (response.success)
-                        {
-                            Debug.Log("Name set");
-                        }
-                        else
+                        if (!response.success)
                         {
                             Debug.LogError("Could not set name " + response.Error);
                         }
@@ -66,17 +56,11 @@ public class LootLockerLeaderboardRepository : IRepository<HighScoreData>
 
           LootLockerSDKManager.GetScoreListMain(_leaderBoardId, 10, 0, (response) =>
           {
-              if (response.success)
-              {
-                  foreach(var item in response.items)
-                  {
-                      data.Add(new HighScoreData(item.score, item.member_id, item.player.name));
-                  }
-              }
-              else
+              if (!response.success)
               {
                   Debug.LogError("Could not set name " + response.Error);
               }
+
           });
 
         return data;
@@ -94,7 +78,6 @@ public class LootLockerLeaderboardRepository : IRepository<HighScoreData>
                 return;
             }
 
-            Debug.Log("successfully started LootLocker session");
             PlayerPrefs.SetString("CurrentPlayerId", response.player_id.ToString());
 
         });
