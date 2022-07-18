@@ -33,4 +33,9 @@ public class SceneSwitch : MonoBehaviour
         _sceneTransition.TransitToScene(CurrentScene, NextSceneName);
     }
 
+    public void RelodeScene()
+    {
+        _sceneTransition.TransitToScene(CurrentScene, CurrentScene);
+    }
+
 }

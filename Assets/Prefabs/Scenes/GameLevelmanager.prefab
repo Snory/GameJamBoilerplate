@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 7171593652084164266}
   - component: {fileID: 7171593652084164265}
   - component: {fileID: 7171593652084164278}
+  - component: {fileID: 3462463190752167111}
   m_Layer: 0
   m_Name: GameOver
   m_TagString: Untagged
@@ -147,6 +148,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Item: {fileID: 7171593652084164279}
+--- !u!114 &3462463190752167111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7171593652084164279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9969591a5e5982a49989cd09e6279c94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentScene: Level
+  _eventSystemInScene: {fileID: 0}
+  _audioListenerInScene: {fileID: 0}
+  _sceneTransition: {fileID: 0}
 --- !u!1 &7171593652705475966
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +403,19 @@ MonoBehaviour:
   Event: {fileID: 11400000, guid: 8013f957941c6b345a599c562dedf484, type: 2}
   Response:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3462463190752167111}
+        m_TargetAssemblyTypeName: SceneSwitch, Assembly-CSharp
+        m_MethodName: SwitchScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7171593652928899567
 GameObject:
   m_ObjectHideFlags: 0
@@ -971,6 +1000,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6688796051387326110, guid: d374029fedf739c46a15a782d4f68879, type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1232528248}
+    - target: {fileID: 6688796051387326110, guid: d374029fedf739c46a15a782d4f68879, type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Raise
+      objectReference: {fileID: 0}
+    - target: {fileID: 6688796051387326110, guid: d374029fedf739c46a15a782d4f68879, type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GeneralEventRaiser, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d374029fedf739c46a15a782d4f68879, type: 3}
 --- !u!4 &7131634173305566894 stripped
@@ -978,3 +1019,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5820918029204678603, guid: d374029fedf739c46a15a782d4f68879, type: 3}
   m_PrefabInstance: {fileID: 3616576755164467557}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7131634173305566895 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5820918029204678602, guid: d374029fedf739c46a15a782d4f68879, type: 3}
+  m_PrefabInstance: {fileID: 3616576755164467557}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1232528248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7131634173305566895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f29c7782187baf439809b4c8a5fcf09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GeneralEventToRaise: {fileID: 11400000, guid: 3b335322e362ba94c86375eb088d8725, type: 2}
