@@ -8,7 +8,7 @@ using UnityEngine;
 [CreateAssetMenu( fileName = "NewGeneralEvent",menuName = "Events/GeneralEvent", order =1)]
 public class GeneralEvent : ScriptableObject
 {
-	private List<GeneralEventListener> listeners =
+	protected List<GeneralEventListener> listeners =
 		new List<GeneralEventListener>();
 
 	public void Raise()
