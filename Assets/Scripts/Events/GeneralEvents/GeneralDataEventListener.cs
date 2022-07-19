@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class GeneralDataEventListener : GeneralEventListener
 {
-    public UnityEvent<EventData> Response;
+    new public UnityEvent<EventData> Response;
 
     public void OnEventRaised(EventData data)
     { Response?.Invoke(data); }
