@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class GeneralEventListener : MonoBehaviour
 {
     public GeneralEvent Event;
-    public UnityEvent Response;
+    public UnityEvent<EventData> Response;
 
     private void OnEnable()
     { Event.RegisterListener(this); }
@@ -16,5 +16,10 @@ public class GeneralEventListener : MonoBehaviour
     { Event.UnregisterListener(this); }
 
     public void OnEventRaised()
-    { Response?.Invoke(); }
+    {
+        OnEventRaised(EventData.Empty);
+    }
+
+    public void OnEventRaised(EventData data)
+    { Response?.Invoke(data); }
 }

@@ -17,6 +17,12 @@ public class GeneralEvent : ScriptableObject
 			listeners[i].OnEventRaised();
 	}
 
+	public void Raise(EventData data)
+	{
+		for (int i = listeners.Count - 1; i >= 0; i--)
+			listeners[i].OnEventRaised(data);
+	}
+
 	public void RegisterListener(GeneralEventListener listener)
 	{ listeners.Add(listener); }
 
