@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LootLockerLeaderboardRepository : RepositoryBase<HighScoreEventData>
+public class LootLockerScoreRepository : RepositoryBase<ScoreEventData>
 {
     int _leaderBoardId = 3195;
 
-    public override HighScoreEventData Add(HighScoreEventData item)
+    public override ScoreEventData Add(ScoreEventData item)
     {
 
         LootLockerSDKManager.SubmitScore(item.PlayerId, item.Score, _leaderBoardId, (response) =>
@@ -50,9 +50,9 @@ public class LootLockerLeaderboardRepository : RepositoryBase<HighScoreEventData
         });
     }
 
-    public override IEnumerable<HighScoreEventData> FindAll()
+    public override IEnumerable<ScoreEventData> FindAll()
     {
-        List<HighScoreEventData> data = new List<HighScoreEventData>();
+        List<ScoreEventData> data = new List<ScoreEventData>();
 
           LootLockerSDKManager.GetScoreListMain(_leaderBoardId, 10, 0, (response) =>
           {

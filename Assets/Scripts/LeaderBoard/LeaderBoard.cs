@@ -7,12 +7,12 @@ using UnityEngine;
 public class LeaderBoard : MonoBehaviour 
 {
 
-    public RepositoryBase<HighScoreEventData> HighScoreRepository;
+    public RepositoryBase<ScoreEventData> ScoreRepository;
 
     // Start is called before the first frame update
     void Start()
     {
-        HighScoreRepository.Load();
+        ScoreRepository.Load();
     }
 
     private void Awake()
@@ -22,11 +22,11 @@ public class LeaderBoard : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        HighScoreRepository.Save();
+        ScoreRepository.Save();
     }
 
     public void OnHighScoreAdded(EventArgs highScoreData)
     {        
-        HighScoreRepository.Add((HighScoreEventData) highScoreData);
+        ScoreRepository.Add((ScoreEventData) highScoreData);
     }
 }
