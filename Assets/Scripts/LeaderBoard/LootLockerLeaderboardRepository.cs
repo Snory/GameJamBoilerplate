@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LootLockerLeaderboardRepository : IRepository<HighScoreData>
+public class LootLockerLeaderboardRepository : RepositoryBase<HighScoreEventData>
 {
     int _leaderBoardId = 3195;
 
-    public HighScoreData Add(HighScoreData item)
+    public override HighScoreEventData Add(HighScoreEventData item)
     {
 
         LootLockerSDKManager.SubmitScore(item.PlayerId, item.Score, _leaderBoardId, (response) =>
@@ -50,9 +50,9 @@ public class LootLockerLeaderboardRepository : IRepository<HighScoreData>
         });
     }
 
-    public IEnumerable<HighScoreData> FindAll()
+    public override IEnumerable<HighScoreEventData> FindAll()
     {
-        List<HighScoreData> data = new List<HighScoreData>();
+        List<HighScoreEventData> data = new List<HighScoreEventData>();
 
           LootLockerSDKManager.GetScoreListMain(_leaderBoardId, 10, 0, (response) =>
           {
@@ -67,7 +67,7 @@ public class LootLockerLeaderboardRepository : IRepository<HighScoreData>
     }
 
 
-    public void Load()
+    public override void Load()
     {
         LootLockerSDKManager.StartGuestSession((response) =>
         {
@@ -85,7 +85,7 @@ public class LootLockerLeaderboardRepository : IRepository<HighScoreData>
         SetName();
     }
 
-    public void Save()
+    public override void Save()
     {
         LootLockerSDKManager.EndSession((response) =>
         {
@@ -97,4 +97,6 @@ public class LootLockerLeaderboardRepository : IRepository<HighScoreData>
             }
         });
     }
+
+
 }
