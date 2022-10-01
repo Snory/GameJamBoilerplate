@@ -29,16 +29,23 @@ public class PlayerRefsScoreRepository : RepositoryBase
             //narvat do results   
             dataList = JsonUtility.FromJson<SerializableList<ScoreData>>(data).WrappedList;
             _results = dataList.Select(item => new ScoreEventData(item)).ToList();
-        }
-                
+        } else
+        {
+            _results = new List<ScoreEventData>();
+        }                
     }
 
     public override void Save()
     {
         SerializableList<ScoreData> dataList = new SerializableList<ScoreData>();
         dataList.WrappedList = _results.Select(item => item.ScoreData).ToList();
-        string data = JsonUtility.ToJson(dataList);
-        PlayerPrefs.SetString("Score", data);
+
+        if(dataList.WrappedList != null)
+        {
+            string data = JsonUtility.ToJson(dataList);
+            Debug.Log(data);
+            PlayerPrefs.SetString("Score", data);
+        }
         PlayerPrefs.Save(); //to be sure, but it should be called on quit anyway
     }
 }
