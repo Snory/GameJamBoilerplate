@@ -5,20 +5,10 @@ using UnityEngine;
 
 public class ScoreEventData : EventArgs { 
     
-    public int Score;
-    public string PlayerId;
-    public string PlayerName;
+    public ScoreData ScoreData;
 
-    public ScoreEventData(int score, string playerId, string playerName)
+    public ScoreEventData(ScoreData scoreData)
     {
-        Score = score;
-        PlayerId = playerId;
-        PlayerName = playerName;
-    }
-
-    public ScoreEventData(int score, string playerName)
-    {
-        Score = score;
-        PlayerName = playerName;
+        ScoreData = scoreData;
     }
 }

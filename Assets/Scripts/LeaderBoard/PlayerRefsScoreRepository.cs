@@ -15,18 +15,19 @@ public class PlayerRefsScoreRepository : RepositoryBase
 
     public override IEnumerable<ScoreEventData> FindAll()
     {
-        return _results.Select(item => new ScoreEventData(item.Score, item.PlayerName));
+        return _results.Select(item => new ScoreEventData(item.ScoreData));
     }
 
     public override void Load()
     {
-        _results = new List<ScoreEventData>();
+        List<ScoreData> dataList = new List<ScoreData>();
         if (PlayerPrefs.HasKey("Score"))
         {
             //rozparsovat json
             string data = PlayerPrefs.GetString("Score");
-        
+
             //narvat do results   
+            dataList = JsonUtility.FromJson<SerializableList<ScoreData>>(data).WrappedList;
         }
                 
     }

@@ -10,7 +10,9 @@ public class LootLockerScoreRepository : RepositoryBase
     public override void Add(ScoreEventData item)
     {
 
-        LootLockerSDKManager.SubmitScore(item.PlayerId, item.Score, _leaderBoardId, (response) =>
+        LootLockerScoreEventData lootLockerItem = (LootLockerScoreEventData)item;
+
+        LootLockerSDKManager.SubmitScore(lootLockerItem.PlayerId, lootLockerItem.ScoreData.Score, _leaderBoardId, (response) =>
            {
                if (!response.success)
                {
@@ -51,7 +53,7 @@ public class LootLockerScoreRepository : RepositoryBase
 
     public override IEnumerable<ScoreEventData> FindAll()
     {
-        List<ScoreEventData> data = new List<ScoreEventData>();
+        List<LootLockerScoreEventData> data = new List<LootLockerScoreEventData>();
 
           LootLockerSDKManager.GetScoreList(_leaderBoardId, 10, (response) =>
           {
@@ -63,7 +65,7 @@ public class LootLockerScoreRepository : RepositoryBase
               {
                   foreach(var item in response.items)
                   {
-                      data.Add(new ScoreEventData(item.score, item.member_id ,item.player.name));
+                      data.Add(new LootLockerScoreEventData(new ScoreData(item.score, item.player.name), item.member_id));
                   }
                   
               }
@@ -72,7 +74,6 @@ public class LootLockerScoreRepository : RepositoryBase
 
         return data;
     }
-
 
     public override void Load()
     {
