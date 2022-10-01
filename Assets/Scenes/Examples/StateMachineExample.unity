@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 89714455}
   - component: {fileID: 89714453}
   m_Layer: 0
-  m_Name: State
+  m_Name: StateMachine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -714,8 +714,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentScene: Level
-  NextScene: Level
-  Additive: {fileID: 11400000, guid: 5a9c7f7c62a8c334ea61d6191557b7ec, type: 2}
+  _eventSystemInScene: {fileID: 0}
+  _audioListenerInScene: {fileID: 0}
   _sceneTransition: {fileID: 553099194}
 --- !u!1 &2115720484
 GameObject:

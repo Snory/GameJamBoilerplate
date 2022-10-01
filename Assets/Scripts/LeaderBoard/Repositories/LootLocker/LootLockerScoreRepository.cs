@@ -3,22 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LootLockerLeaderboardRepository : IRepository<HighScoreData>
+public class LootLockerScoreRepository : RepositoryBase
 {
     int _leaderBoardId = 3195;
+    string _memberId;
 
-    public HighScoreData Add(HighScoreData item)
+    public override void Add(ScoreEventData item)
     {
+        StartCoroutine(AddScoreRoutine(item));    
+    }
 
-        LootLockerSDKManager.SubmitScore(item.PlayerId, item.Score, _leaderBoardId, (response) =>
-           {
-               if (!response.success)
-               {
-                   Debug.LogError("Score could not be updated: " + response.Error);
-               }
-           });
 
-        return item;
+    private IEnumerator AddScoreRoutine(ScoreEventData item)
+    {
+        bool done = false;
+
+        LootLockerSDKManager.SubmitScore(_memberId, item.ScoreData.Score, _leaderBoardId, (response) =>
+        {
+            if (response.success)
+            {
+                Debug.Log("Successfully uploaded score");
+                done = true;
+            }
+            else
+            {
+                Debug.Log("Couldn not upload score: " + response.Error);
+                done = true;
+            }
+        });
+        yield return new WaitWhile(() => done == false);
     }
 
     private void SetName()
@@ -50,15 +63,22 @@ public class LootLockerLeaderboardRepository : IRepository<HighScoreData>
         });
     }
 
-    public IEnumerable<HighScoreData> FindAll()
+    public override IEnumerable<ScoreEventData> FindAll()
     {
-        List<HighScoreData> data = new List<HighScoreData>();
+        List<ScoreEventData> data = new List<ScoreEventData>();
 
-          LootLockerSDKManager.GetScoreListMain(_leaderBoardId, 10, 0, (response) =>
+          LootLockerSDKManager.GetScoreList(_leaderBoardId, 10, (response) =>
           {
               if (!response.success)
               {
-                  Debug.LogError("Could not set name " + response.Error);
+                  Debug.LogError("Could not get score list " + response.Error);
+
+              } else
+              {
+                  foreach(var item in response.items)
+                  {
+                      data.Add(new ScoreEventData(new ScoreData(item.score, item.player.name)));
+                  }                  
               }
 
           });
@@ -66,8 +86,7 @@ public class LootLockerLeaderboardRepository : IRepository<HighScoreData>
         return data;
     }
 
-
-    public void Load()
+    public override void Load()
     {
         LootLockerSDKManager.StartGuestSession((response) =>
         {
@@ -76,16 +95,18 @@ public class LootLockerLeaderboardRepository : IRepository<HighScoreData>
                 Debug.LogError("error starting LootLocker session " + response.Error);
 
                 return;
+            } else
+            {
+                Debug.Log("Lootlocker repository loaded");
             }
 
-            PlayerPrefs.SetString("CurrentPlayerId", response.player_id.ToString());
-
+            _memberId = response.player_id.ToString();
         });
 
         SetName();
     }
 
-    public void Save()
+    public override void Save()
     {
         LootLockerSDKManager.EndSession((response) =>
         {
@@ -97,4 +118,6 @@ public class LootLockerLeaderboardRepository : IRepository<HighScoreData>
             }
         });
     }
+
+
 }

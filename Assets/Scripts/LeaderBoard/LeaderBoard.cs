@@ -1,18 +1,18 @@
 using LootLocker.Requests;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeaderBoard : Singleton<LeaderBoard>
+public class LeaderBoard : MonoBehaviour 
 {
 
-    private IRepository<HighScoreData> leaderBoardRepository;
+    public RepositoryBase ScoreRepository;
 
     // Start is called before the first frame update
     void Start()
     {
-        leaderBoardRepository = new LootLockerLeaderboardRepository();
-        leaderBoardRepository.Load();
+        ScoreRepository.Load();
     }
 
     private void Awake()
@@ -22,6 +22,11 @@ public class LeaderBoard : Singleton<LeaderBoard>
 
     private void OnApplicationQuit()
     {
-        leaderBoardRepository.Save();
+        ScoreRepository.Save();
+    }
+
+    public void OnHighScoreAdded(EventArgs highScoreData)
+    {        
+        ScoreRepository.Add((ScoreEventData) highScoreData);
     }
 }
