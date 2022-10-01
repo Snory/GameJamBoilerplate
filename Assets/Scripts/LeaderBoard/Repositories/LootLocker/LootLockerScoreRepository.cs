@@ -6,20 +6,32 @@ using UnityEngine;
 public class LootLockerScoreRepository : RepositoryBase
 {
     int _leaderBoardId = 3195;
+    string _memberId;
 
     public override void Add(ScoreEventData item)
     {
+        StartCoroutine(AddScoreRoutine(item));    
+    }
 
-        LootLockerScoreEventData lootLockerItem = (LootLockerScoreEventData)item;
 
-        LootLockerSDKManager.SubmitScore(lootLockerItem.PlayerId, lootLockerItem.ScoreData.Score, _leaderBoardId, (response) =>
-           {
-               if (!response.success)
-               {
-                   Debug.LogError("Score could not be updated: " + response.Error);
-               }
-           });
+    private IEnumerator AddScoreRoutine(ScoreEventData item)
+    {
+        bool done = false;
 
+        LootLockerSDKManager.SubmitScore(_memberId, item.ScoreData.Score, _leaderBoardId, (response) =>
+        {
+            if (response.success)
+            {
+                Debug.Log("Successfully uploaded score");
+                done = true;
+            }
+            else
+            {
+                Debug.Log("Couldn not upload score: " + response.Error);
+                done = true;
+            }
+        });
+        yield return new WaitWhile(() => done == false);
     }
 
     private void SetName()
@@ -53,7 +65,7 @@ public class LootLockerScoreRepository : RepositoryBase
 
     public override IEnumerable<ScoreEventData> FindAll()
     {
-        List<LootLockerScoreEventData> data = new List<LootLockerScoreEventData>();
+        List<ScoreEventData> data = new List<ScoreEventData>();
 
           LootLockerSDKManager.GetScoreList(_leaderBoardId, 10, (response) =>
           {
@@ -65,9 +77,8 @@ public class LootLockerScoreRepository : RepositoryBase
               {
                   foreach(var item in response.items)
                   {
-                      data.Add(new LootLockerScoreEventData(new ScoreData(item.score, item.player.name), item.member_id));
-                  }
-                  
+                      data.Add(new ScoreEventData(new ScoreData(item.score, item.player.name)));
+                  }                  
               }
 
           });
@@ -84,10 +95,12 @@ public class LootLockerScoreRepository : RepositoryBase
                 Debug.LogError("error starting LootLocker session " + response.Error);
 
                 return;
+            } else
+            {
+                Debug.Log("Lootlocker repository loaded");
             }
 
-            PlayerPrefs.SetString("CurrentPlayerId", response.player_id.ToString());
-
+            _memberId = response.player_id.ToString();
         });
 
         SetName();

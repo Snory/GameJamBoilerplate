@@ -15,4 +15,5 @@ public struct ScoreData
         Score = score;
         Name = name;
     }
+
 }
