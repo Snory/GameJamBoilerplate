@@ -15,6 +15,7 @@
   - Finite state machine (https://github.com/Snory/LudumDareTemplate/wiki/Finite-state-machine)
 - Leadeboard
   - Leadeboard solution for https://lootlocker.com/
+  - Leaderboard using PlayerPrefs https://docs.unity3d.com/ScriptReference/PlayerPrefs.html
   
 
 ## Planned
