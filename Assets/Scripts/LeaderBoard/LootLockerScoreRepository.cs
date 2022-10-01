@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LootLockerScoreRepository : RepositoryBase<ScoreEventData>
+public class LootLockerScoreRepository : RepositoryBase
 {
     int _leaderBoardId = 3195;
 
@@ -58,7 +58,7 @@ public class LootLockerScoreRepository : RepositoryBase<ScoreEventData>
           {
               if (!response.success)
               {
-                  Debug.LogError("Could not set name " + response.Error);
+                  Debug.LogError("Could not get score list " + response.Error);
               }
 
           });

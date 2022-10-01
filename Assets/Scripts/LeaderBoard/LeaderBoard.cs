@@ -7,7 +7,7 @@ using UnityEngine;
 public class LeaderBoard : MonoBehaviour 
 {
 
-    public RepositoryBase<ScoreEventData> ScoreRepository;
+    public RepositoryBase ScoreRepository;
 
     // Start is called before the first frame update
     void Start()
