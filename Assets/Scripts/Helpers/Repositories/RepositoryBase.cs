@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class RepositoryBase : MonoBehaviour
 {
-    public abstract ScoreEventData Add(ScoreEventData item);
+    public abstract void Add(ScoreEventData item);
     public abstract IEnumerable<ScoreEventData> FindAll();
 
     public abstract void Load();

@@ -7,7 +7,7 @@ public class LootLockerScoreRepository : RepositoryBase
 {
     int _leaderBoardId = 3195;
 
-    public override ScoreEventData Add(ScoreEventData item)
+    public override void Add(ScoreEventData item)
     {
 
         LootLockerSDKManager.SubmitScore(item.PlayerId, item.Score, _leaderBoardId, (response) =>
@@ -18,7 +18,6 @@ public class LootLockerScoreRepository : RepositoryBase
                }
            });
 
-        return item;
     }
 
     private void SetName()
@@ -54,11 +53,19 @@ public class LootLockerScoreRepository : RepositoryBase
     {
         List<ScoreEventData> data = new List<ScoreEventData>();
 
-          LootLockerSDKManager.GetScoreListMain(_leaderBoardId, 10, 0, (response) =>
+          LootLockerSDKManager.GetScoreList(_leaderBoardId, 10, (response) =>
           {
               if (!response.success)
               {
                   Debug.LogError("Could not get score list " + response.Error);
+
+              } else
+              {
+                  foreach(var item in response.items)
+                  {
+                      data.Add(new ScoreEventData(item.score, item.member_id ,item.player.name));
+                  }
+                  
               }
 
           });
