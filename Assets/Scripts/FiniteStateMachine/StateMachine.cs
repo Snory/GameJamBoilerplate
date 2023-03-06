@@ -20,6 +20,12 @@ public class StateMachine : MonoBehaviour
         _currentState = _initState;
         _currentStateEventArgs = new StateEventArguments { CachedComponents = _cachedComponents};
     }
+    
+       private void Start()
+    {
+        _currentState.OnEnter(_currentStateEventArgs);
+    }
+ 
 
     private void Update()
     {
