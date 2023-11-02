@@ -69,10 +69,11 @@ public class GameManager : Singleton<GameManager>
     private void PauseGame()
     {
         _pauseGameGlobalEvent.Raise();
-        if(_currentGameState == GameState.PAUSED)
+        if (_currentGameState == GameState.PAUSED)
         {
             TransitToState(GameState.GAMEPLAY);
-        } else if(_currentGameState == GameState.GAMEPLAY)
+        }
+        else if (_currentGameState == GameState.GAMEPLAY)
         {
             TransitToState(GameState.PAUSED);
         }
@@ -86,12 +87,14 @@ public class GameManager : Singleton<GameManager>
 
     public void RestartGame()
     {
-        if (_currentGameState != GameState.OVER) return;
-
         _restartGameGlobalEvent.Raise();
         TransitToState(GameState.GAMEPLAY);
     }
 
+    public void GameplayStarted()
+    {
+        TransitToState(GameState.GAMEPLAY);
+    }
     private void QuitGame()
     {
 
