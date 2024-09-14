@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitch : MonoBehaviour
 {
-    public string CurrentScene;
+    [SerializeField]
+    private string _currentScene;
 
     [SerializeField]
     private EventSystem _eventSystemInScene;
@@ -17,7 +18,12 @@ public class SceneSwitch : MonoBehaviour
     [SerializeField]
     private SceneTransitionBase _sceneTransition;
 
-    
+    private void Start()
+    {
+        _currentScene = SceneManager.GetActiveScene().name;
+    }
+
+
     public void SwitchScene(string NextSceneName)
     {
         if (_eventSystemInScene != null)
@@ -30,12 +36,12 @@ public class SceneSwitch : MonoBehaviour
             _audioListenerInScene.enabled = false;
         }
 
-        _sceneTransition.TransitToScene(CurrentScene, NextSceneName);
+        _sceneTransition.TransitToScene(_currentScene, NextSceneName);
     }
 
-    public void RelodeScene()
+    public void ReloadScene()
     {
-        _sceneTransition.TransitToScene(CurrentScene, CurrentScene);
+        _sceneTransition.TransitToScene(_currentScene, _currentScene);
     }
 
 }

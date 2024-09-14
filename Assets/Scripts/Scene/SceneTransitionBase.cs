@@ -12,7 +12,6 @@ public abstract class SceneTransitionBase : MonoBehaviour
 
     [SerializeField]
     private GeneralEvent _sceneLoaded;
-    private string _nextSceneName;
 
     public void UnloadScene(string currentSceneName)
     {
@@ -20,6 +19,7 @@ public abstract class SceneTransitionBase : MonoBehaviour
         {
             return;
         }
+
         StartCoroutine(UnloadSceneRoutine(currentSceneName));
     }
 

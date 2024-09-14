@@ -25,6 +25,7 @@ public class AnimatorSceneTransition : SceneTransitionBase
 
     public IEnumerator RunAnimator(string currentSceneName, string newSceneName)
     {
+        UnloadScene(currentSceneName);
         yield return new WaitForSeconds(_initTransitionDelay);
         _sceneTransitionAnimator.SetTrigger("End");
         yield return new WaitForSeconds(_initLoadDelay);

@@ -4,22 +4,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 using System.Linq;
-public enum GameState { GAMEPLAY, PAUSED, MAINMENU, OVER }
+public enum GameState { GAMEPLAY, PAUSED, MAINMENU }
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private string _startScene;
 
+
+    [SerializeField]
     private GameState _currentGameState = GameState.MAINMENU;
 
     public GameState GameState { get => _currentGameState; }
 
+    [SerializeField]
+    private GeneralEvent _gameStateChangedEvent;
 
-    [SerializeField] private GeneralEvent _pauseGameGlobalEvent;
-
-
-    [SerializeField] private GeneralEvent _restartGameGlobalEvent;
 
     private void Awake()
     {
@@ -28,6 +28,7 @@ public class GameManager : Singleton<GameManager>
 
     public void TransitToState(GameState newGameState)
     {
+        _gameStateChangedEvent.Raise(new GameStateChangedEventArgs(_currentGameState, newGameState));
         _currentGameState = newGameState;
 
         switch (newGameState)
@@ -39,12 +40,12 @@ public class GameManager : Singleton<GameManager>
                 Time.timeScale = 1f;
                 break;
         }
+
     }
 
     private void Start()
     {
         SceneManager.LoadScene(_startScene, LoadSceneMode.Single);
-
     }
 
     private void Update()
@@ -66,9 +67,19 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public void OnGamePlayStarted()
+    {
+        TransitToState(GameState.GAMEPLAY);
+    }
+
+    public void OnMainMenu()
+    {
+        TransitToState(GameState.MAINMENU);
+    }
+
+
     private void PauseGame()
     {
-        _pauseGameGlobalEvent.Raise();
         if(_currentGameState == GameState.PAUSED)
         {
             TransitToState(GameState.GAMEPLAY);
@@ -76,19 +87,15 @@ public class GameManager : Singleton<GameManager>
         {
             TransitToState(GameState.PAUSED);
         }
-
-    }
-
-    public void GameOver()
-    {
-        TransitToState(GameState.OVER);
     }
 
     public void RestartGame()
     {
-        if (_currentGameState != GameState.OVER) return;
+        if(_currentGameState == GameState.MAINMENU)
+        {
+            return;
+        }
 
-        _restartGameGlobalEvent.Raise();
         TransitToState(GameState.GAMEPLAY);
     }
 
