@@ -7,7 +7,8 @@ public enum GameStates
     Leaderboard,
     Gameplay,
     Pause,
-    GameOver
+    GameOver,
+    Win
 }
 
 public class GameManager : MonoBehaviour
@@ -25,6 +26,11 @@ public class GameManager : MonoBehaviour
     public void OnLeaderboardLoaded()
     {
         TransitToState(GameStates.Leaderboard);
+    }
+
+    public void OnMainMenuLoaded()
+    {
+        TransitToState(GameStates.MainMenu);
     }
 
     public void OnGameOver()
@@ -48,6 +54,33 @@ public class GameManager : MonoBehaviour
         TransitToState(GameStates.MainMenu);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            QuitGame();
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            PauseGame();
+        }
+    }
+
+    private void PauseGame()
+    {
+        if(_currentGameState != GameStates.Gameplay && _currentGameState != GameStates.Pause) return;
+
+        if (_currentGameState == GameStates.Pause)
+        {
+            TransitToState(GameStates.Gameplay);
+        }
+        else if (_currentGameState == GameStates.Gameplay)
+        {
+            TransitToState(GameStates.Pause);
+        }
+    }
+
     private void TransitToState(GameStates newState)
     {
         _currentGameState = newState;
@@ -59,7 +92,7 @@ public class GameManager : MonoBehaviour
             case GameStates.GameOver:
                 Time.timeScale = 0;
                 break;
-            case GameStates.Leaderboard:
+            case GameStates.Win:
                 Time.timeScale = 0;
                 break;
             default:
@@ -68,5 +101,15 @@ public class GameManager : MonoBehaviour
         }
 
         GameStateChanged.Raise(new GameStateChangeEventArgs(_currentGameState));
+    }
+
+    private void QuitGame()
+    {
+        PlayerPrefs.Save();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+Application.Quit();
+#endif
     }
 }

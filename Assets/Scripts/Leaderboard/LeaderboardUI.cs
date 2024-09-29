@@ -1,5 +1,5 @@
 using System;
-using System.Threading;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -14,35 +14,16 @@ public class LeaderboardUI : MonoBehaviour
     [SerializeField]
     private GameObject _leaderboardItemPrefab;
 
+    [SerializeField]
+    private GeneralEvent _retrievePlayerScoresEvent;
 
-    public async void OnGameStateChanged(EventArgs eventArgs)
-    {
-        GameStateChangeEventArgs gameStateChangeEventArgs = (GameStateChangeEventArgs)eventArgs;
+    [SerializeField]
+    private GameObject _waitingForData;
 
-        if (gameStateChangeEventArgs.CurrentGameState == GameStates.GameOver)
-        {
-            await ShowLeaderboard();
-        }
-
-        if (gameStateChangeEventArgs.CurrentGameState == GameStates.Pause)
-        { 
-            await ShowLeaderboard();
-        }
-
-        if (gameStateChangeEventArgs.CurrentGameState == GameStates.Leaderboard)
-        {
-            await ShowLeaderboard();
-        }
-
-        if (gameStateChangeEventArgs.CurrentGameState == GameStates.Gameplay)
-        {
-            HideLeaderboard();
-        }
-    }
-
-    [ContextMenu("Show Leaderboard")]
-    private async Task ShowLeaderboard() {
+    public void ShowLeaderboard() {
        
+        Debug.Log("ShowLeaderboard");
+
         _leaderBoardCanvas.SetActive(true);
         
         foreach (Transform child in _leaderboardItemParent)
@@ -50,21 +31,28 @@ public class LeaderboardUI : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        Debug.Log(Thread.CurrentThread.ManagedThreadId);
-        var scores = await Leaderboard.Instance.GetScores();
-
-        Debug.Log("Scores: " + scores.PlayerScores.Count);
-
-        for (int i = 0; i < scores.PlayerScores.Count; i++)
-        {
-            var leaderboardItem = Instantiate(_leaderboardItemPrefab, _leaderboardItemParent);
-            var score = scores.PlayerScores[i];
-            leaderboardItem.GetComponent<LeaderboardItemUI>().SetLeaderboardItem(i, score.Username, score.Score);
-        }
+        _waitingForData.SetActive(true);
+        _retrievePlayerScoresEvent.Raise(new RetrievePlayerScoresEventArgs(this.gameObject));
     }
 
-    private void HideLeaderboard()
+    public void OnPlayerScoresRetrieved(EventArgs eventArgs)
     {
-        _leaderBoardCanvas.SetActive(false);
+        PlayerScoresRetrievedEventArgs playerScoresRetrievedEventArgs = (PlayerScoresRetrievedEventArgs)eventArgs;
+
+        if (playerScoresRetrievedEventArgs.SourceGameObject != this.gameObject)
+        {
+            return;
+        }
+
+        var scores = playerScoresRetrievedEventArgs.PlayerScores.PlayerScores.OrderByDescending(s => s.Score).ToList();
+
+        for (int i = 0; i < scores.Count; i++)
+        {
+            var leaderboardItem = Instantiate(_leaderboardItemPrefab, _leaderboardItemParent);
+            var score = scores[i];
+            leaderboardItem.GetComponent<LeaderboardItemUI>().SetLeaderboardItem(i + 1, score.Username, score.Score);
+        }
+
+        _waitingForData.SetActive(false);
     }
 }

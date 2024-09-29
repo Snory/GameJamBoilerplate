@@ -940,6 +940,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1684550592321934627, guid: 56daa93e62fda77488b0b0bda1375ceb, type: 3}
+      propertyPath: _sceneLoadedEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 9a41e657b0f715b41b7fbbf99ab08ec4, type: 2}
     - target: {fileID: 3175558633778995640, guid: 56daa93e62fda77488b0b0bda1375ceb, type: 3}
       propertyPath: m_Name
       value: SceneLoader

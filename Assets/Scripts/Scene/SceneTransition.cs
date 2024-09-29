@@ -1,6 +1,4 @@
 using Cysharp.Threading.Tasks;
-using System.Collections;
-using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,25 +27,28 @@ public class SceneTransition : MonoBehaviour
         TransitToScene(_currentScene.name);
     }
 
-    public void TransitToScene(string newSceneName)
+    public async void TransitToScene(string newSceneName)
     {
-        StartCoroutine(TransitToSceneRoutine(newSceneName));
-    }
+        var previousScene = _currentScene.name;
+        _sceneTransitionAnimatorController.SetTrigger("EndScene");
+        await WaitForSeconds(_waitBeforeTransit);
+        await LoadScene(newSceneName);
 
-    public IEnumerator TransitToSceneRoutine(string newSceneName)
-    {
-        Debug.Log($"Transit to scene: {newSceneName}");
         if (SceneManager.sceneCount > 1)
         {
-            StartCoroutine(UnloadScene(_currentScene.name));
+            //await UnloadScene(previousScene);
         }
-        Debug.Log("Start scene transition");
-        _sceneTransitionAnimatorController.SetTrigger("EndScene");
-        Debug.Log("End scene transition");
-        Debug.Log("Wait before transit");
-        yield return new WaitForSeconds(_waitBeforeTransit);
-        Debug.Log("Start loading scene");
-        StartCoroutine(LoadScene(newSceneName));
+    }
+
+    public async Task WaitForSeconds(float seconds)
+    {
+        float endTime = Time.unscaledTime + seconds;
+
+        while (Time.unscaledTime < endTime)
+        {
+            Debug.Log("Waiting for seconds");
+            await Task.Yield();
+        }
     }
 
     /// <summary>
@@ -61,35 +62,16 @@ public class SceneTransition : MonoBehaviour
         }
     }
 
-
-    private IEnumerator UnloadScene(string currentSceneName)
+    private async Task UnloadScene(string currentSceneName)
     {
-        Debug.Log($"Unload scene: {currentSceneName}");
-        AsyncOperation asyncOp = SceneManager.UnloadSceneAsync(currentSceneName);
-        //run hide anim
-        while (!asyncOp.isDone)
-        {
-            yield return null;
-        }
+        Debug.Log("Unloading current scene");
+        await SceneManager.UnloadSceneAsync(currentSceneName);
     }
 
-    private IEnumerator LoadScene(string newSceneName)
+    private async Task LoadScene(string newSceneName)
     {
-        Debug.Log($"Load scene: {newSceneName}");
-        AsyncOperation asyncOp = SceneManager.LoadSceneAsync(newSceneName);
-        asyncOp.allowSceneActivation = false;
-
-        while (!asyncOp.isDone)
-        {
-            if (asyncOp.progress >= 0.9f)
-            {
-                asyncOp.allowSceneActivation = true;
-                Debug.Log("Scene loaded");
-            }
-
-            yield return null;
-        }
-
+        Debug.Log($"Loading new scene: {newSceneName}");
+        await SceneManager.LoadSceneAsync(newSceneName);
         _currentScene = SceneManager.GetSceneByName(newSceneName);
     }
 }

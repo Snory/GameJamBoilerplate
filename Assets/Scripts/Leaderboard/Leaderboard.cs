@@ -14,7 +14,7 @@ public partial class Leaderboard : Singleton<Leaderboard>
     private const string _postScoreEndpoint = "https://batiko.pythonanywhere.com/api/score/player_score";
 
     [SerializeField]
-    private GeneralEvent _playerAddedEvent;
+    private GeneralEvent _playerAdded, _playerScoreRetrieved, _playerScoreAdded;
 
     protected override void Awake()
     {
@@ -26,24 +26,36 @@ public partial class Leaderboard : Singleton<Leaderboard>
         Debug.Log("Leaderboard loaded");
     }
 
-    public async void OnPlayerAddEvent(EventArgs eventArgs)
+    public async void OnAddPlayerScoreEvent(EventArgs eventArgs)
     {
-        PlayerAddEventArgs playerdataAddEvent = (PlayerAddEventArgs)eventArgs;
+        AddPlayerScoreEventArgs playerScoreDataAddEvent = (AddPlayerScoreEventArgs)eventArgs;
+        await PostPlayerScore(playerScoreDataAddEvent.PlayerScoreData);
+    }
+
+    public async void OnAddPlayerEvent(EventArgs eventArgs)
+    {
+        AddPlayerEventArgs playerdataAddEvent = (AddPlayerEventArgs)eventArgs;
 
         // check if player aready exists
-
         PlayerDataList players = await GetPlayers();
 
         foreach (PlayerData player in players.Players)
         {
             if (player.Username == playerdataAddEvent.PlayerData.Username)
             {
-                _playerAddedEvent.Raise(new PlayerAddedEventArgs(false));
+                _playerAdded.Raise(new PlayerAddedEventArgs(false));
                 return;
             }
         }
 
         await PostNewPlayer(playerdataAddEvent.PlayerData);
+    }
+
+    public async void OnRetrievePlayerScores(EventArgs eventArgs)
+    {
+        RetrievePlayerScoresEventArgs retrievePlayerScoresEventArgs = (RetrievePlayerScoresEventArgs)eventArgs;
+        PlayerScoreDataList playerScores = await GetScores();
+        _playerScoreRetrieved.Raise(new PlayerScoresRetrievedEventArgs(retrievePlayerScoresEventArgs.SourceGameObject, playerScores));
     }
 
     public async Task<PlayerDataList> GetPlayers()
@@ -58,16 +70,31 @@ public partial class Leaderboard : Singleton<Leaderboard>
 
     public async Task PostNewPlayer(PlayerData playerData)
     {
-        await PostData(_postPlayerEndpoint, playerData);
+        var playerdataAddEventSanitize = new PlayerData
+        {
+            Username = playerData.Username.Replace("\u200B", "")
+        };
+        await PostData(_postPlayerEndpoint, playerdataAddEventSanitize);
     }
 
     public async Task PostPlayerScore(PlayerScoreData playerScoreData)
     {
-        await PostData(_postScoreEndpoint, playerScoreData);
+
+        //check if username contains zero width space
+
+        var playerScoreSanitize = new PlayerScoreData
+        {
+            Username = playerScoreData.Username.Replace("\u200B", ""),
+            Score = playerScoreData.Score
+        };
+
+        await PostData(_postScoreEndpoint, playerScoreSanitize);
     }
 
     private async Task PostData<T>(string endpoint, T data)
     {
+        Debug.Log("Posting data to " + endpoint);
+
         string jsonData = JsonConvert.SerializeObject(data);
 
         using (UnityWebRequest request = UnityWebRequest.Post(endpoint, jsonData, "application/json"))
@@ -81,12 +108,14 @@ public partial class Leaderboard : Singleton<Leaderboard>
                 Debug.LogError("Error posting data: " + request.error);
             }
 
-            _playerAddedEvent.Raise(new PlayerAddedEventArgs(true));
+            _playerAdded.Raise(new PlayerAddedEventArgs(true));
         }
     }
 
     private async Task<T> GetData<T>(string endpoint)
     {
+        Debug.Log("Getting data from " + endpoint);
+
         using (UnityWebRequest request = UnityWebRequest.Get(endpoint))
         {
             request.SetRequestHeader("Authorization", _token);

@@ -202,7 +202,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.5
+  m_fontSize: 27.35
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -364,8 +364,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 172633211}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.7}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0.3}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -726,8 +726,8 @@ RectTransform:
   - {fileID: 575237247}
   m_Father: {fileID: 172633211}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.3}
+  m_AnchorMin: {x: 0, y: 0.3}
+  m_AnchorMax: {x: 1, y: 0.7}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1043,8 +1043,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _errorTextObject: {fileID: 293413104}
-  _nameText: {fileID: 1923365783}
-  _playerAddEvent: {fileID: 11400000, guid: 5116ff709a78276408d4d7af83719a01, type: 2}
+  _nameText: {fileID: 2056785811}
+  _addPlayerEvent: {fileID: 11400000, guid: 5116ff709a78276408d4d7af83719a01, type: 2}
   _switchSceneEvent: {fileID: 11400000, guid: c6e66f94fe4d7114d999e3249aff5358, type: 2}
 --- !u!114 &1347495499
 MonoBehaviour:
@@ -1202,6 +1202,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6447171029589308013, guid: 56daa93e62fda77488b0b0bda1375ceb, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6447171029589308013, guid: 56daa93e62fda77488b0b0bda1375ceb, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6447171029589308013, guid: 56daa93e62fda77488b0b0bda1375ceb, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 6447171029589308013, guid: 56daa93e62fda77488b0b0bda1375ceb, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 600
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1287,8 +1303,8 @@ RectTransform:
   - {fileID: 2056785810}
   m_Father: {fileID: 172633211}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.3}
-  m_AnchorMax: {x: 1, y: 0.7}
+  m_AnchorMin: {x: 0, y: 0.7}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
