@@ -7,7 +7,7 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
     private static T _instance;
     public static T Instance { get => _instance; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         if(_instance != null)
         {
