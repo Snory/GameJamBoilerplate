@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        SceneManager.LoadScene(SceneNames.MainMenu, LoadSceneMode.Single);
+        SceneManager.LoadScene(SceneNames.Logo, LoadSceneMode.Single);
         TransitToState(GameStates.MainMenu);
     }
 

@@ -36,7 +36,7 @@ public class SceneTransition : MonoBehaviour
 
         if (SceneManager.sceneCount > 1)
         {
-            //await UnloadScene(previousScene);
+            await UnloadScene(previousScene);
         }
     }
 
