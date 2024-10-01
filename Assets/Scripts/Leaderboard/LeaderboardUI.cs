@@ -35,6 +35,11 @@ public class LeaderboardUI : MonoBehaviour
         _retrievePlayerScoresEvent.Raise(new RetrievePlayerScoresEventArgs(this.gameObject));
     }
 
+    public void HideLeaderboard()
+    {
+        _leaderBoardCanvas.SetActive(false);
+    }
+
     public void OnPlayerScoresRetrieved(EventArgs eventArgs)
     {
         PlayerScoresRetrievedEventArgs playerScoresRetrievedEventArgs = (PlayerScoresRetrievedEventArgs)eventArgs;

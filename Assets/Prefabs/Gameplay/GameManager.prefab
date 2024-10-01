@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2904668624441802302}
   - component: {fileID: 5352506710120060000}
   - component: {fileID: 4735297518610875576}
+  - component: {fileID: 419059823876404247}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -95,6 +96,34 @@ MonoBehaviour:
       - m_Target: {fileID: 2904668624441802302}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: OnLeaderboardLoaded
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &419059823876404247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3505919118416465307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0512967ae9095114184bf02dbbd79004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 3d90cb86d70cfcf4880a2e82b86a5663, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2904668624441802302}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnGameOver
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -38,9 +38,9 @@ public class GameManager : MonoBehaviour
         TransitToState(GameStates.GameOver);
     }
 
-    public void OnPauseGame()
+    public void OnExitGame()
     {
-        TransitToState(GameStates.Pause);
+        QuitGame();
     }
 
     private void Awake()
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        SceneManager.LoadScene(SceneNames.MainMenu, LoadSceneMode.Single);
+        SceneManager.LoadScene(SceneNames.Logo, LoadSceneMode.Single);
         TransitToState(GameStates.MainMenu);
     }
 
