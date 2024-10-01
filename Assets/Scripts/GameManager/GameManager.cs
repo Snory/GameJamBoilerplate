@@ -38,9 +38,9 @@ public class GameManager : MonoBehaviour
         TransitToState(GameStates.GameOver);
     }
 
-    public void OnPauseGame()
+    public void OnExitGame()
     {
-        TransitToState(GameStates.Pause);
+        QuitGame();
     }
 
     private void Awake()
